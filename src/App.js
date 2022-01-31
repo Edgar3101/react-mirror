@@ -1,23 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css"
+import React from "react";
+import ShowCurrent from "./Products/ShowCurrent";
+
 
 function App() {
+  //Lo ideal primero es hacer fetch de los productos
+  
+  //Es imporante tener en cuenta que en este casi siempre renderizaremos el primero 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ShowCurrent/>
     </div>
   );
 }
