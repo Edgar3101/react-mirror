@@ -14,18 +14,26 @@ export default class ShowVariants extends React.Component{
       fetch('http://localhost:8001/api/variant/' + this.id).then((res)=>res.json().then((data)=>{
         this.setState({ query: data.query });
       }));
-      console.log(this.state.query) //returns [];
+
     }
   
     render() {
-      console.log(this.state.query) //returns [] the first render, returns ['topic1','topic2','topic3'] on the second render;
+      
       return(
+        <>
         <ul>
           {this.state.query.map((data, key) => (
-              data.type === "Color" ?
-            <li key={data.id} className="list"> Color: {data.description}</li> : <></>
+              data.type === "Color" || data.type === "color" ?
+            <li key={data.id} className="list"> Color: <div className="circle" style={{ backgroundColor:data.description }}></div></li> : <></>
           ))}
         </ul>
+          <ul>
+          {this.state.query.map((data, key) => (
+              data.type === "Talla" || data.type === "talla" ?
+            <li key={data.id} className="list"> Tallas: {data.description}</li> : <></>
+          ))}
+        </ul>
+        </>
       )
     }
   }

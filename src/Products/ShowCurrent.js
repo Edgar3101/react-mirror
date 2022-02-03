@@ -1,6 +1,7 @@
 import "../App.css"
 import React, { useState, useEffect } from "react";
 import ShowVariants from "./ShowVariants";
+import Recommended from "./Recommended";
 //Este modulo cumple la funcion de renderizar el producto actual se le debe pasar
 //un parametro Index
 
@@ -41,7 +42,10 @@ export default function ShowCurrent() {
             .then(data => {
                 if (index < data.query - 1)
                     setIndex(index + 1)
+                else
+                    setIndex(0);
                 fetch_product();
+                
 
             })
 
@@ -67,6 +71,9 @@ export default function ShowCurrent() {
                     <i class="fas fa-arrow-right fa-5x"></i>
                     </button>
                 </div>
+            </div>
+            <div className="recommended">
+                <Recommended/>
             </div>
         </div>
     )

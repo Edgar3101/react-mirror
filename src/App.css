@@ -9,18 +9,24 @@ html{
 }
 .Hello{
     color: white;
+    text-align: center;
 }
 .container{
     margin: auto;
-    width: 70%;
+    width: 90%;
     display: grid;
     grid-gap: 30px;
-    grid-template-areas: "left right";
-    height: 90vh;
+    grid-template-areas: "left right recommended";
+    grid-template-columns: 1fr 1fr 1fr/2;
+    height: 60vh;
+
 }
 .left_side{
     grid-area: left;
     
+}
+.recommended{
+    grid-area: recommended;
 }
 .right_side{
     grid-area: right ;
@@ -59,6 +65,18 @@ li{
 .direction-buttons > i{
     color: white;
 
-    
 
+}
+.img_smaller{
+    width: 100px;
+    height: auto;
+}
+.circle{
+    -webkit-border-radius:8px;
+    -moz-border-radius:8px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    width:14px;
+    height:14px;
+    display: inline-block;
 }
