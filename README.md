@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+### Requirements
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project requires a backend, please clone the project called mirror-server
 
 ## Available Scripts
 
