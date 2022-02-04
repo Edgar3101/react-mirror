@@ -1,6 +1,6 @@
 import React from "react";
 import ShowVariants from "./ShowVariants";
-import Recommended from "./Recommended";
+//import Recommended from "./Recommended";
 
 
 export default class ShowCurrentClass extends React.Component {
@@ -9,8 +9,10 @@ export default class ShowCurrentClass extends React.Component {
         this.state = {
             currentProduct: null,
             isLoading: true,
-            index: 0
+            index: 0,
+            recommended: [],
         }
+        
     }
     fetch_product() {
         fetch("http://localhost:8001/api/")
@@ -52,9 +54,13 @@ export default class ShowCurrentClass extends React.Component {
     }
     componentDidMount () {
         this.fetch_product();
-        console.log(this.state.currentProduct);
+        fetch('http://localhost:8001/api/random/').then((res) => res.json().then((data) => {
+            this.setState({ recommended: data.query });
+        }));
     }
-    SelectProduct () {
+    SelectProduct (id) {
+        this.setState({index : id})
+        this.fetch_product();
         
     }
 
@@ -80,7 +86,17 @@ export default class ShowCurrentClass extends React.Component {
                 </div>
             </div>
             <div className="recommended">
-                <Recommended/>
+            <h3 className="text">Recomendaciones</h3>
+                <ul>
+                    {this.state.recommended.map((pro) => {
+                        return (
+                            <li onClick={() => this.SelectProduct(pro.id -1)} key={"recommendeds" + String(pro.title)} >
+                                <img  className="img_smaller" src={"http://localhost:8001/uploads/" + pro.image} alt={"image" + pro.title} />
+                                <p>{pro.title} ${pro.price}</p>
+                            </li>
+                        )
+                    })}
+                </ul>
             </div>
         </div>
 
