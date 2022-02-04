@@ -59,6 +59,7 @@ export default class ShowCurrentClass extends React.Component {
         }));
     }
     SelectProduct (id) {
+        this.setState({ isLoading: true });
         this.setState({index : id})
         this.fetch_product();
         
