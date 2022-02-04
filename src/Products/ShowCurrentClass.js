@@ -57,6 +57,10 @@ export default class ShowCurrentClass extends React.Component {
         fetch('http://localhost:8001/api/random/').then((res) => res.json().then((data) => {
             this.setState({ recommended: data.query });
         }));
+        document.addEventListener("keyup", function(e){
+            //La idea es que con esto capturemos el codigo de barras y haggamos fetch a una base de datos por ejemplo con firebase
+            console.log(e.key)
+        })
     }
     SelectProduct (id) {
         this.setState({ isLoading: true });
@@ -64,11 +68,13 @@ export default class ShowCurrentClass extends React.Component {
         this.fetch_product();
         
     }
+ 
 
     render () {
         console.log(this.state.currentProduct);
         return (
             <div class="container">
+            <input type="text" hidden id="code-bar"/>
             <div className="left_side">
                 <img className="default_image" src={this.state.isLoading === false ? "http://localhost:8001/uploads/" + this.state.currentProduct.image : ""}
                     alt={"Producto" + this.state.index} />
