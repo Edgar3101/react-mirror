@@ -59,7 +59,9 @@ li{
 }
 .direction-buttons{
     margin: 20px;
-    background-color: transparent;
+    background-color: #007bff;
+    color: white;
+    padding: 8px;
 
 }
 .direction-buttons > i{
@@ -79,4 +81,10 @@ li{
     width:14px;
     height:14px;
     display: inline-block;
+}
+.variant_button{
+    background-color: transparent;
+    color: white;
+    padding: 9px;
+    margin: 8px;
 }

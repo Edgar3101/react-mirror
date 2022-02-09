@@ -28,10 +28,12 @@ export default class ShowVariants extends React.Component{
           ))}
         </ul>
           <ul>
-          {this.state.query.map((data, key) => (
+          {this.state.query.map((data, key) => {
+            return (
               data.type === "Talla" || data.type === "talla" ?
-            <li key={data.id} className="list"> Tallas: {data.description}</li> : <></>
-          ))}
+            <li key={data.id} className="list">  <button className="variant_button">Talla: {data.description}</button></li> : <></>
+            )
+            })}
         </ul>
         </>
       )
