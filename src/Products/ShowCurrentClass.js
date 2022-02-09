@@ -11,6 +11,7 @@ export default class ShowCurrentClass extends React.Component {
             isLoading: true,
             index: 0,
             recommended: [],
+            code: []
         }
 
     }
@@ -23,44 +24,38 @@ export default class ShowCurrentClass extends React.Component {
                 //Ahora una vez tengamos esto tenemos que tener en cuenta que ahora podemos obtener las variantes
             })
     }
-    /*1
-    changeProductLeft() {
-        //setIsLoading(true);
-        this.setState({ isLoading: true });
-        if (this.state.index === 0) {
-            fetch("http://localhost:8001/api/count/")
-                .then(res => res.json())
-                .then(data => {
-                    this.setState({ index: data.query - 1 })
-                })
-        }
-        else {
-            this.setState({ index: this.state.index - 1 })
-        }
-        this.fetch_product();
-    }
-    changeProductRight() {
-        this.setState({ isLoading: true });
-        fetch("http://localhost:8001/api/count/")
-            .then(res => res.json())
-            .then(data => {
-                if (this.state.index < data.query - 1)
-                    //updateIndex(index + 1, setIndex) 
-                    this.setState({ index: this.state.index + 1 })
-                else
-                    //updateIndex(0, setIndex)//setIndex(0);
-                    this.setState({ index: 0 });
-                this.fetch_product();
-            })
-    } */
+    
+    productCodebar(code) {
+        //Debemos recibir como parametro en codebar completo
+        fetch("http://localhost:8001/api/code/" + code.join('') + "/")
+        .then(res => res.json())
+        .then(data => {console.log(data)})
+    } 
     componentDidMount() {
         this.fetch_product();
         fetch('http://localhost:8001/api/random/').then((res) => res.json().then((data) => {
             this.setState({ recommended: data.query });
         }));
-        document.addEventListener("keyup", function (e) {
+        var code = [];
+        var self=this;
+        window.addEventListener("keypress", function (e) {
+            if(e.key !== "Shift"){
+                code.push(e.key)
+            }
             //La idea es que con esto capturemos el codigo de barras y haggamos fetch a una base de datos por ejemplo con firebase
-            console.log(e.key)
+            if(code.length === 9){
+                fetch("http://localhost:8001/api/code/" + code.join('') + "/")
+                .then(res => res.json())
+                .then(data => {
+                    if(data.error === undefined){
+                    self.setState({ index: data.product.id -1}); self.fetch_product();
+                    console.log("Ready")
+                }
+                })
+                while(code.length > 0)
+                    code.pop(); 
+                
+            }
         })
     }
     SelectProduct(id) {
@@ -69,6 +64,7 @@ export default class ShowCurrentClass extends React.Component {
         this.fetch_product();
 
     }
+    
 
 
     render() {
@@ -85,15 +81,7 @@ export default class ShowCurrentClass extends React.Component {
                     {this.state.isLoading === false ? <ShowVariants id={this.state.currentProduct.id} /> : ""}
                     <p className="text">{this.state.isLoading === false ? this.state.currentProduct.description : ""}</p>
 
-                    <div className="zone-button">
-                        {/*
-                    <button className="direction-buttons" onClick={() => this.changeProductLeft()}>
-                    <i class="fas fa-arrow-left fa-5x"></i>
-                    </button>
-                    <button className="direction-buttons" onClick={() => this.changeProductRight()}> 
-                    <i class="fas fa-arrow-right fa-5x"></i>
-                    </button>
-                     */}
+                    <div className="zone-button">           
                         <button className="direction-buttons"><strong>Solicitar</strong></button>
                     </div>
 
