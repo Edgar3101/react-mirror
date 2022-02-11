@@ -11,7 +11,7 @@ export default class ShowCurrentClass extends React.Component {
             isLoading: true,
             index: 0,
             recommended: [],
-            code: []
+            code: [], //Este es el tiempo original de aqui tendremos el tiempo de referencia
         }
 
     }
@@ -24,37 +24,47 @@ export default class ShowCurrentClass extends React.Component {
                 //Ahora una vez tengamos esto tenemos que tener en cuenta que ahora podemos obtener las variantes
             })
     }
-    
-    productCodebar(code) {
-        //Debemos recibir como parametro en codebar completo
-        fetch("http://localhost:8001/api/code/" + code.join('') + "/")
-        .then(res => res.json())
-        .then(data => {console.log(data)})
-    } 
+
+    diferenceTime(arr) {
+        var value;
+        for (let i = 1; i < arr.length; i++) {
+            if (arr[i] - arr[i - 1] > 2000) {
+                value = false;
+                break;
+            }
+            if (arr.length - 1 === i) {
+                value = true;
+            }
+        }
+        return value;
+    }
     componentDidMount() {
         this.fetch_product();
         fetch('http://localhost:8001/api/random/').then((res) => res.json().then((data) => {
             this.setState({ recommended: data.query });
         }));
         var code = [];
-        var self=this;
+        var times = [];
+        var self = this;
         window.addEventListener("keypress", function (e) {
-            if(e.key !== "Shift"){
+            if (e.key !== "Shift") {
                 code.push(e.key)
+                times.push(new Date().getTime())
             }
             //La idea es que con esto capturemos el codigo de barras y haggamos fetch a una base de datos por ejemplo con firebase
-            if(code.length === 9){
+            if (code.length > 6 && self.diferenceTime(times) === true) {
                 fetch("http://localhost:8001/api/code/" + code.join('') + "/")
-                .then(res => res.json())
-                .then(data => {
-                    if(data.error === undefined){
-                    self.setState({ index: data.product.id -1}); self.fetch_product();
-                    console.log("Ready")
-                }
-                })
-                while(code.length > 0)
-                    code.pop(); 
-                
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.error === undefined) {
+                            self.setState({ index: data.product.id - 1 }); self.fetch_product();
+                            console.log("Ready")
+                        }
+                    })
+                while (code.length > 0)
+                    code.pop();
+                while (times.length > 0)
+                    times.pop();
             }
         })
     }
@@ -64,9 +74,6 @@ export default class ShowCurrentClass extends React.Component {
         this.fetch_product();
 
     }
-    
-
-
     render() {
         console.log(this.state.currentProduct);
         return (
@@ -81,7 +88,7 @@ export default class ShowCurrentClass extends React.Component {
                     {this.state.isLoading === false ? <ShowVariants id={this.state.currentProduct.id} /> : ""}
                     <p className="text">{this.state.isLoading === false ? this.state.currentProduct.description : ""}</p>
 
-                    <div className="zone-button">           
+                    <div className="zone-button">
                         <button className="direction-buttons"><strong>Solicitar</strong></button>
                     </div>
 
