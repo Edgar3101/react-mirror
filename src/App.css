@@ -6,33 +6,63 @@ html{
 
 #root{
     height: 100%;
+    width: 100%;
 }
 .Hello{
     color: white;
     text-align: center;
 }
 .container{
+    /*
     display: grid;
     grid-template-columns: repeat(12, 2fr);
     grid-gap: 1px;
     grid-auto-rows: minmax(100px, auto);
-}
-.left_side{
-    grid-column: 1;
-    grid-row: 1;
-    margin-left: 10%;
-    
+    width: 100%;
+    */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
 }
 .recommended{
-    grid-column: 1;
-    grid-row: 3;
+    margin-top: 4%;
+}
+.recommended ul{
+    display: flex;
+    align-items: stretch; /* Default */
+    justify-content: space-between;
+  
+   
+}
+.recommended li{
+    display: block;
+    list-style-type: none;
 }
 .right_side{
+    /*
     grid-column: 1;
     grid-row:2;
-    align-items: center;
+   margin-left: 10%; */
+   display: flex;
+    flex-direction: column;
+    justify-content: center;
+   align-items: center;
    justify-content: center;
-   margin-left: 10%;
+}
+.right_side ul{
+    display: flex;
+    align-items: stretch; /* Default */
+    justify-content: space-between;
+
+}
+.right_side li{
+    display: block;
+    list-style-type: none;
+    margin: 10px;
+
 }
 .default_image{
     margin-top: 30px;
@@ -43,17 +73,21 @@ html{
 }
 
 li{
-    display: inline-block;
+  
     color: white;
-    margin-left: 10%;
+    
 }
 .text{
     color: white;
     text-align: center;
 }
+p {
+    text-align: justify;
+    width: 70%;
+}
 .zone-button{
     text-align: center;
-    margin-top: 10%;
+
 }
 .direction-buttons{
     margin: 20px;
@@ -86,3 +120,4 @@ li{
     padding: 9px;
     margin: 8px;
 }
+
