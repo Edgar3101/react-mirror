@@ -5,56 +5,54 @@ html{
 }
 
 #root{
-    height: 100vh;
+    height: 100%;
 }
 .Hello{
     color: white;
     text-align: center;
 }
 .container{
-    margin: auto;
-    width: 90%;
     display: grid;
-    grid-gap: 30px;
-    grid-template-areas: "left right recommended";
-    grid-template-columns: 1fr 1fr 1fr/2;
-    height: 60vh;
-
+    grid-template-columns: repeat(12, 2fr);
+    grid-gap: 1px;
+    grid-auto-rows: minmax(100px, auto);
 }
 .left_side{
-    grid-area: left;
+    grid-column: 1;
+    grid-row: 1;
+    margin-left: 10%;
     
 }
 .recommended{
-    grid-area: recommended;
+    grid-column: 1;
+    grid-row: 3;
 }
 .right_side{
-    grid-area: right ;
-    display: flex;
-    flex-direction: column;
+    grid-column: 1;
+    grid-row:2;
     align-items: center;
    justify-content: center;
+   margin-left: 10%;
 }
 .default_image{
     margin-top: 30px;
-    width: auto;
-    height: 80vh;
-
+    width: 600px;
 }
 .list{
     list-style-type: none;
 }
+
 li{
-    display: inline;
+    display: inline-block;
     color: white;
+    margin-left: 10%;
 }
 .text{
     color: white;
-    text-align: justify;
+    text-align: center;
 }
 .zone-button{
-    display: flex;
-    flex-direction: row;
+    text-align: center;
     margin-top: 10%;
 }
 .direction-buttons{
@@ -71,7 +69,7 @@ li{
 }
 .img_smaller{
     width: 100px;
-    height: auto;
+    height: 100px;
 }
 .circle{
     -webkit-border-radius:8px;
