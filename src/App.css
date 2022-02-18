@@ -107,17 +107,14 @@ html{
     display: block;
     list-style-type: none;
     font-size: 17px;
-    
-   
-   
+
 }
 .recommended li p{
     text-overflow: ellipsis; 
     font-size: 25px;
     text-align: center;
     width: 160px;
-    
-   
+
 }
 
 .recommended h3{
@@ -127,7 +124,7 @@ html{
     width: 100px;
     height: 100px;
     align-self: center;
-    padding: 30px;
+    padding: 0px 30px;
 }
 
 /* Here we end with sections */
