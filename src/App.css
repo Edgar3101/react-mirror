@@ -64,7 +64,8 @@ html{
 .right_side p{
     color: white;
     width: 70%;
-    font-size: 20px;
+    font-size: 25px;
+    text-align: center;
 }
 .direction-buttons{
     margin: 20px;
@@ -124,7 +125,7 @@ html{
     width: 100px;
     height: 100px;
     align-self: center;
-    padding: 0px 30px;
+    padding: 0px 40px;
 }
 
 /* Here we end with sections */
