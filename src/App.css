@@ -1,3 +1,4 @@
+/* Here we start with generals */
 html{
     overflow: hidden;
     font-family: 'Roboto', sans-serif;    
@@ -7,11 +8,9 @@ html{
 #root{
     height: 100%;
     width: 100%;
-}
-.Hello{
     color: white;
-    text-align: center;
 }
+
 .container{
     /*
     display: grid;
@@ -27,20 +26,13 @@ html{
     width: 100%;
 
 }
-.recommended{
-    margin-top: 4%;
+/*  Here we begin with left-side section */
+.default_image{
+    margin-top: 30px;
+    width: auto;
+    height: 46vh;
 }
-.recommended ul{
-    display: flex;
-    align-items: stretch; /* Default */
-    justify-content: space-between;
-  
-   
-}
-.recommended li{
-    display: block;
-    list-style-type: none;
-}
+/*  Here we begin with right-side section */
 .right_side{
     /*
     grid-column: 1;
@@ -64,46 +56,25 @@ html{
     margin: 10px;
 
 }
-.default_image{
-    margin-top: 30px;
-    width: 600px;
-}
-.list{
-    list-style-type: none;
-}
 
-li{
-  
-    color: white;
-    
-}
-.text{
+.right_side h1{
     color: white;
     text-align: center;
 }
-p {
-    text-align: justify;
+.right_side p{
+    color: white;
     width: 70%;
-}
-.zone-button{
-    text-align: center;
-
+    font-size: 20px;
 }
 .direction-buttons{
     margin: 20px;
     background-color: #007bff;
     color: white;
-    padding: 8px;
+    padding: 13px;
 
 }
 .direction-buttons > i{
     color: white;
-
-
-}
-.img_smaller{
-    width: 100px;
-    height: 100px;
 }
 .circle{
     -webkit-border-radius:8px;
@@ -120,4 +91,47 @@ p {
     padding: 9px;
     margin: 8px;
 }
+
+
+/*  Here we begin with recommended section */
+.recommended{
+    margin-top: 10px;
+}
+.recommended ul{
+    display: flex;
+    align-items: stretch; /* Default */
+    justify-content: space-between;
+   
+}
+.recommended li{
+    display: block;
+    list-style-type: none;
+    font-size: 17px;
+    
+   
+   
+}
+.recommended li p{
+    text-overflow: ellipsis; 
+    font-size: 25px;
+    text-align: center;
+    width: 160px;
+    
+   
+}
+
+.recommended h3{
+    text-align: center;
+}
+.img_smaller{
+    width: 100px;
+    height: 100px;
+    align-self: center;
+    padding: 30px;
+}
+
+/* Here we end with sections */
+
+
+
 

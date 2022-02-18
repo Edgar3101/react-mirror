@@ -1,6 +1,6 @@
 import React from "react";
 import ShowVariants from "./ShowVariants";
-//import Recommended from "./Recommended";
+
 
 
 export default class ShowCurrentClass extends React.Component {
@@ -58,7 +58,7 @@ export default class ShowCurrentClass extends React.Component {
                     .then(data => {
                         if (data.error === undefined) {
                             self.setState({ index: data.product.id - 1 }); self.fetch_product();
-                            console.log("Ready")
+                  
                         }
                     })
                 while (code.length > 0)
@@ -75,7 +75,7 @@ export default class ShowCurrentClass extends React.Component {
 
     }
     render() {
-        console.log(this.state.currentProduct);
+
         return (
             <div class="container">
                 <input type="text" hidden id="code-bar" />

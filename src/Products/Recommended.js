@@ -13,12 +13,12 @@ export default class Recommended extends React.Component {
         fetch('http://localhost:8001/api/random/').then((res) => res.json().then((data) => {
             this.setState({ query: data.query });
         }));
-        console.log(this.state.query)
+
     }
 
 
     render() {
-        console.log(this.state.query)
+
         return (
             <>
                 <h3 className="text">Recomendaciones</h3>
