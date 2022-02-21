@@ -12,6 +12,7 @@ export default class ShowCurrentClass extends React.Component {
             index: 0,
             recommended: [],
             code: [], //Este es el tiempo original de aqui tendremos el tiempo de referencia
+            all_products: {},
         }
 
     }
@@ -19,7 +20,23 @@ export default class ShowCurrentClass extends React.Component {
         fetch("http://localhost:8001/api/")
             .then(res => res.json())
             .then(data => {
-                this.setState({ currentProduct: data.query[this.state.index] });
+                //La mejor opcion que tensmos es mandar un diccionario que pueda funcionar mas o menos igual
+                var data_val= {};
+                var products= data.product;
+                var colors = data.color;
+                var sizes= data.variant_Size
+                var counter = 0;
+                products.map(function(obj){
+                    data_val[counter]= {"title": obj.title, "description": obj.description, "price": obj.price, 
+                        "colors": colors.filter(color => color.productId === obj.id), 'sizes': null}
+                    var list_of_id= data_val[counter]['colors'].map(function(el){ return el.id});
+                    data_val[counter]['sizes']= sizes.filter(size => list_of_id.includes(size.variant_color_id))  
+                    counter = counter + 1;
+                })
+                //Vamos a tener todos los productos Guardados en un estado
+                this.setState({ all_products: data_val })
+                
+                this.setState({ currentProduct: data_val[this.state.index] });
                 this.setState({ isLoading: false });
                 //Ahora una vez tengamos esto tenemos que tener en cuenta que ahora podemos obtener las variantes
             })
@@ -80,7 +97,7 @@ export default class ShowCurrentClass extends React.Component {
             <div class="container">
                 <input type="text" hidden id="code-bar" />
                 <div className="left_side">
-                    <img className="default_image" src={this.state.isLoading === false ? "http://localhost:8001/uploads/" + this.state.currentProduct.image : ""}
+                    <img className="default_image" src={this.state.isLoading === false ? "http://localhost:8001/uploads/" + this.state.currentProduct.color[0].image : ""}
                         alt={"Producto" + this.state.index} />
                 </div>
                 <div className="right_side">

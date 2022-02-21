@@ -24,7 +24,7 @@ export default class ShowVariants extends React.Component{
         <ul>
           {this.state.query.map((data, key) => (
               data.type === "Color" || data.type === "color" ?
-            <li key={data.id} className="list"> Color: <div className="circle" style={{ backgroundColor:data.description }}></div></li> : <></>
+            <li key={data.id} className="list"> <button className="variant_button"> Color: <div className="circle" style={{ backgroundColor:data.description }}></div> </button></li> : <></>
           ))}
         </ul>
           <ul>
