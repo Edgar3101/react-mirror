@@ -11,8 +11,10 @@ export default class ShowCurrentClass extends React.Component {
             isLoading: true,
             index: 0,
             recommended: [],
+            recommended_colors: [],
             code: [], //Este es el tiempo original de aqui tendremos el tiempo de referencia
             all_products: {},
+            index_of_colors: 0
         }
 
     }
@@ -27,7 +29,7 @@ export default class ShowCurrentClass extends React.Component {
                 var sizes= data.variant_Size
                 var counter = 0;
                 products.map(function(obj){
-                    data_val[counter]= {"title": obj.title, "description": obj.description, "price": obj.price, 
+                    data_val[counter]= {"id" : obj.id, "title": obj.title, "description": obj.description, "price": obj.price, 
                         "colors": colors.filter(color => color.productId === obj.id), 'sizes': null}
                     var list_of_id= data_val[counter]['colors'].map(function(el){ return el.id});
                     data_val[counter]['sizes']= sizes.filter(size => list_of_id.includes(size.variant_color_id))  
@@ -35,8 +37,9 @@ export default class ShowCurrentClass extends React.Component {
                 })
                 //Vamos a tener todos los productos Guardados en un estado
                 this.setState({ all_products: data_val })
-                
+                console.log(data_val)
                 this.setState({ currentProduct: data_val[this.state.index] });
+                this.setState({ index_of_colors: Math.floor(Math.random() * this.state.currentProduct.colors.length)});
                 this.setState({ isLoading: false });
                 //Ahora una vez tengamos esto tenemos que tener en cuenta que ahora podemos obtener las variantes
             })
@@ -57,8 +60,18 @@ export default class ShowCurrentClass extends React.Component {
     }
     componentDidMount() {
         this.fetch_product();
+        //Hay que modificar esta parte con la data que disponemos
         fetch('http://localhost:8001/api/random/').then((res) => res.json().then((data) => {
-            this.setState({ recommended: data.query });
+             const new_map= Object.entries(data.query).map(([k,v]) => {
+                for(let i=0; i<data.colors.length; i++){
+                    if(v.id === data.colors[i].productId){
+                        data.query[k].image= data.colors[i].image;
+                        return data.query[k];
+                    }
+                }
+             })
+            this.setState({ recommended: new_map });
+            
         }));
         var code = [];
         var times = [];
@@ -85,6 +98,7 @@ export default class ShowCurrentClass extends React.Component {
             }
         })
     }
+
     SelectProduct(id) {
         this.setState({ isLoading: true });
         this.setState({ index: id })
@@ -94,10 +108,10 @@ export default class ShowCurrentClass extends React.Component {
     render() {
 
         return (
-            <div class="container">
+            <div className="container">
                 <input type="text" hidden id="code-bar" />
                 <div className="left_side">
-                    <img className="default_image" src={this.state.isLoading === false ? "http://localhost:8001/uploads/" + this.state.currentProduct.color[0].image : ""}
+                    <img className="default_image" src={this.state.isLoading === false ? "http://localhost:8001/uploads/" + this.state.currentProduct.colors[this.state.index_of_colors].image : ""}
                         alt={"Producto" + this.state.index} />
                 </div>
                 <div className="right_side">
@@ -116,7 +130,7 @@ export default class ShowCurrentClass extends React.Component {
                         {this.state.recommended.map((pro) => {
                             return (
                                 <li onClick={() => this.SelectProduct(pro.id - 1)} key={"recommendeds" + String(pro.title)} >
-                                    <img className="img_smaller" src={"http://localhost:8001/uploads/" + pro.image} alt={"image" + pro.title} />
+                                    <img className="img_smaller" src={"http://localhost:8001/uploads/" +  pro.image} alt={"image" + pro.title} />
                                     <p>{pro.title} ${pro.price}</p>
                                 </li>
                             )
