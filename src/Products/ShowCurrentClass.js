@@ -122,22 +122,6 @@ export default class ShowCurrentClass extends React.Component {
                 }
             }
         }
-        /*
-        for (let i = 0; i < this.state.all_products.length; i++) {
-            if (this.state.all_products[i].id === id) {
-                this.setState({ index: i })
-            }
-        }
-        for (let k = 0; k < this.state.all_products.length; k++) {
-            //Ahora para que esto funcione debemos hacer un subfor
-            for (let j = 0; j < this.state.all_products[k].colors.length; j++) {
-                if (this.state.all_products[k].colors[j].id === id_of_color) {
-                    this.fetch_product(j)
-                }
-            }
-
-        }
-        */
         this.myStorage.clear();
         resolve("Works");
     })
