@@ -36,8 +36,13 @@ export default class ShowVariants extends React.Component{
     Save_Option = (data, param) =>{
       if(param === "color"){
         this.props.action(data)
-        //return
       }
+    }
+
+    getSize(size, sizeId){
+      this.myStorage.clear();
+      this.myStorage.setItem(sizeId, size)
+
     }
     render() {
       
@@ -50,7 +55,7 @@ export default class ShowVariants extends React.Component{
         </ul>
           <ul>
           {this.state.sizes.map((dato) => {
-            return <li key={dato.id} className="list">  <button className="variant_button">Talla: {dato.size}</button></li>
+            return <li key={dato.id} className="list">  <button className="variant_button"  onClick={() => this.getSize(dato.id, dato.size)}>Talla: {dato.size}</button></li>
           })}
         </ul>
         

@@ -54,7 +54,7 @@ export default class ShowCurrentClass extends React.Component {
     diferenceTime(arr) {
         var value;
         for (let i = 1; i < arr.length; i++) {
-            if (arr[i] - arr[i - 1] > 2000) {
+            if (arr[i] - arr[i - 1] > 4000) {
                 value = false;
                 break;
             }
@@ -85,18 +85,25 @@ export default class ShowCurrentClass extends React.Component {
         var times = [];
         var self = this;
         window.addEventListener("keypress", function (e) {
+            var enter;
             if (e.key !== "Shift") {
-                code.push(e.key)
+                if(e.key !== "Enter"){
+                    code.push(e.key)
+                }
                 times.push(new Date().getTime())
             }
+            if(e.key === "Enter"){
+                enter=true
+            }
             //La idea es que con esto capturemos el codigo de barras y haggamos fetch a una base de datos por ejemplo con firebase
-            if (code.length > 6 && self.diferenceTime(times) === true) {
+            if (code.length > 6 && self.diferenceTime(times) === true && enter===true) {
                 fetch("http://localhost:8001/api/code/" + code.join('') + "/")
                     .then(res => res.json())
                     .then(data => {
                         if (data.error === undefined) {
-                            self.setState({ index: data.product.id - 1 }); self.fetch_product();
-                            this.myStorage.clear()
+                            self.SelectProduct(data.product.id, data.color.id)
+                            //self.setState({ index: data.product.id - 1 }); self.fetch_product();
+                            self.myStorage.clear()
 
                         }
                     })
@@ -109,13 +116,13 @@ export default class ShowCurrentClass extends React.Component {
     }
     promiseLoop = async (id, id_of_color) => new Promise((resolve) => {
         this.setState({ isLoading: true });
-        for (const i in this.state.all_products){
+        for (const i in this.state.all_products) {
             if (this.state.all_products[i].id === id) {
                 this.setState({ index: i })
             }
         }
-        for(const k in this.state.all_products){
-            for(const j in this.state.all_products[k].colors){
+        for (const k in this.state.all_products) {
+            for (const j in this.state.all_products[k].colors) {
                 if (this.state.all_products[k].colors[j].id === id_of_color) {
                     this.fetch_product(j)
                     break;
@@ -128,9 +135,8 @@ export default class ShowCurrentClass extends React.Component {
 
     async SelectProduct(id, id_of_color) {
         this.promiseLoop(id, id_of_color).then((message) => console.log(message))
-        return true
-
     }
+
     sethandlerColor = (new_index) => {
         let idx;
         for (let i = 0; i < this.state.currentProduct.colors.length; i++) {
