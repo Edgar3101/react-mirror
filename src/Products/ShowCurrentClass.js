@@ -1,7 +1,6 @@
 import React from "react";
 import ShowVariants from "./ShowVariants";
-
-
+//import FetchBuy from "./Fetch_Product";
 
 export default class ShowCurrentClass extends React.Component {
     constructor(props) {
@@ -18,6 +17,7 @@ export default class ShowCurrentClass extends React.Component {
             index_of_colors: 0
         }
         this.myStorage = window.localStorage;
+        //this.ws = new WebSocket("ws://localhost:8002/");
 
     }
     fetch_product(b = null) {
@@ -78,8 +78,7 @@ export default class ShowCurrentClass extends React.Component {
                     }
                 }
             })
-            this.setState({ recommended: new_map });
-
+            this.setState({ recommended: new_map });   
         }));
         var code = [];
         var times = [];
@@ -162,7 +161,7 @@ export default class ShowCurrentClass extends React.Component {
                     <p className="text">{this.state.isLoading === false ? this.state.currentProduct.description : ""}</p>
 
                     <div className="zone-button">
-                        <button className="direction-buttons"><strong>Solicitar</strong></button>
+                        <button className="direction-buttons" /*onClick={() => FetchBuy(this.ws, this.state.currentProduct, this.myStorage) */><strong>Solicitar</strong></button>
                     </div>
 
                 </div>
@@ -179,6 +178,7 @@ export default class ShowCurrentClass extends React.Component {
                         })}
                     </ul>
                 </div>
+         
             </div>
 
         )

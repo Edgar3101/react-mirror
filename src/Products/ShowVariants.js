@@ -41,7 +41,8 @@ export default class ShowVariants extends React.Component{
 
     getSize(size, sizeId){
       this.myStorage.clear();
-      this.myStorage.setItem(sizeId, size)
+      this.myStorage.setItem("size", size)
+      this.myStorage.setItem("id", sizeId)
 
     }
     render() {
