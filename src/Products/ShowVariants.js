@@ -1,14 +1,18 @@
 import "../App.css"
 import React from "react";
 
+
 export default class ShowVariants extends React.Component{
+
     constructor(props){
       super(props);
       this.state = {
         colors: [],
         sizes: [],
       }
-      this.id= this.props.id
+      this.id= this.props.id;
+      this.myStorage = this.props.storage
+      
     }
    
     componentDidMount() {
@@ -29,14 +33,19 @@ export default class ShowVariants extends React.Component{
       }));
 
     }
-  
+    Save_Option = (data, param) =>{
+      if(param === "color"){
+        this.props.action(data)
+        //return
+      }
+    }
     render() {
       
       return(
         <>
         <ul>
           {this.state.colors.map((data) => (
-            <li key={data.id} className="list"> <button className="variant_button"> Color: <div className="circle" style={{ backgroundColor: data.color }}></div> </button></li>
+            <li key={data.id} className="list"> <button className="variant_button" onClick={() => this.Save_Option(data.id, "color")}> Color: <div className="circle" style={{ backgroundColor: data.color }}></div> </button></li>
           ))} 
         </ul>
           <ul>

@@ -6,6 +6,7 @@ import ShowVariants from "./ShowVariants";
 export default class ShowCurrentClass extends React.Component {
     constructor(props) {
         super(props);
+        this.sethandlerColor.bind(this);
         this.state = {
             currentProduct: null,
             isLoading: true,
@@ -16,31 +17,36 @@ export default class ShowCurrentClass extends React.Component {
             all_products: {},
             index_of_colors: 0
         }
+        this.myStorage = window.localStorage;
 
     }
-    fetch_product() {
+    fetch_product(b = null) {
+        this.myStorage.clear()
         fetch("http://localhost:8001/api/")
             .then(res => res.json())
             .then(data => {
                 //La mejor opcion que tensmos es mandar un diccionario que pueda funcionar mas o menos igual
-                var data_val= {};
-                var products= data.product;
+                var data_val = {};
+                var products = data.product;
                 var colors = data.color;
-                var sizes= data.variant_Size
+                var sizes = data.variant_Size
                 var counter = 0;
-                products.map(function(obj){
-                    data_val[counter]= {"id" : obj.id, "title": obj.title, "description": obj.description, "price": obj.price, 
-                        "colors": colors.filter(color => color.productId === obj.id), 'sizes': null}
-                    var list_of_id= data_val[counter]['colors'].map(function(el){ return el.id});
-                    data_val[counter]['sizes']= sizes.filter(size => list_of_id.includes(size.variant_color_id))  
+                products.map(function (obj) {
+                    data_val[counter] = {
+                        "id": obj.id, "title": obj.title, "description": obj.description, "price": obj.price,
+                        "colors": colors.filter(color => color.productId === obj.id), 'sizes': null
+                    }
+                    var list_of_id = data_val[counter]['colors'].map(function (el) { return el.id });
+                    data_val[counter]['sizes'] = sizes.filter(size => list_of_id.includes(size.variant_color_id))
                     counter = counter + 1;
                 })
                 //Vamos a tener todos los productos Guardados en un estado
                 this.setState({ all_products: data_val })
                 console.log(data_val)
                 this.setState({ currentProduct: data_val[this.state.index] });
-                this.setState({ index_of_colors: Math.floor(Math.random() * this.state.currentProduct.colors.length)});
+                b === null ? this.setState({ index_of_colors: Math.floor(Math.random() * this.state.currentProduct.colors.length) }) : this.setState({ index_of_colors: b });
                 this.setState({ isLoading: false });
+
                 //Ahora una vez tengamos esto tenemos que tener en cuenta que ahora podemos obtener las variantes
             })
     }
@@ -62,16 +68,18 @@ export default class ShowCurrentClass extends React.Component {
         this.fetch_product();
         //Hay que modificar esta parte con la data que disponemos
         fetch('http://localhost:8001/api/random/').then((res) => res.json().then((data) => {
-             const new_map= Object.entries(data.query).map(([k,v]) => {
-                for(let i=0; i<data.colors.length; i++){
-                    if(v.id === data.colors[i].productId){
-                        data.query[k].image= data.colors[i].image;
+            const new_map = Object.entries(data.query).map(([k, v]) => {
+                for (let i = 0; i < data.colors.length; i++) {
+                    if (v.id === data.colors[i].productId) {
+                        data.query[k].image = data.colors[i].image;
+                        data.query[k].index_of_image = data.colors[i].id;
+                        //Tenemos un problema y es que debemos hacer un map para conseguir el index en allproducts
                         return data.query[k];
                     }
                 }
-             })
+            })
             this.setState({ recommended: new_map });
-            
+
         }));
         var code = [];
         var times = [];
@@ -88,7 +96,8 @@ export default class ShowCurrentClass extends React.Component {
                     .then(data => {
                         if (data.error === undefined) {
                             self.setState({ index: data.product.id - 1 }); self.fetch_product();
-                  
+                            this.myStorage.clear()
+
                         }
                     })
                 while (code.length > 0)
@@ -98,13 +107,56 @@ export default class ShowCurrentClass extends React.Component {
             }
         })
     }
-
-    SelectProduct(id) {
+    promiseLoop = async (id, id_of_color) => new Promise((resolve) => {
         this.setState({ isLoading: true });
-        this.setState({ index: id })
-        this.fetch_product();
+        for (const i in this.state.all_products){
+            if (this.state.all_products[i].id === id) {
+                this.setState({ index: i })
+            }
+        }
+        for(const k in this.state.all_products){
+            for(const j in this.state.all_products[k].colors){
+                if (this.state.all_products[k].colors[j].id === id_of_color) {
+                    this.fetch_product(j)
+                    break;
+                }
+            }
+        }
+        /*
+        for (let i = 0; i < this.state.all_products.length; i++) {
+            if (this.state.all_products[i].id === id) {
+                this.setState({ index: i })
+            }
+        }
+        for (let k = 0; k < this.state.all_products.length; k++) {
+            //Ahora para que esto funcione debemos hacer un subfor
+            for (let j = 0; j < this.state.all_products[k].colors.length; j++) {
+                if (this.state.all_products[k].colors[j].id === id_of_color) {
+                    this.fetch_product(j)
+                }
+            }
+
+        }
+        */
+        this.myStorage.clear();
+        resolve("Works");
+    })
+
+    async SelectProduct(id, id_of_color) {
+        this.promiseLoop(id, id_of_color).then((message) => console.log(message))
+        return true
 
     }
+    sethandlerColor = (new_index) => {
+        let idx;
+        for (let i = 0; i < this.state.currentProduct.colors.length; i++) {
+            if (this.state.currentProduct.colors[i].id === new_index) {
+                idx = i
+            }
+        }
+        this.setState({ index_of_colors: idx })
+    }
+
     render() {
 
         return (
@@ -115,8 +167,8 @@ export default class ShowCurrentClass extends React.Component {
                         alt={"Producto" + this.state.index} />
                 </div>
                 <div className="right_side">
-                    <h1 class="Hello">{this.state.isLoading === false ? this.state.currentProduct.title : ""}</h1>
-                    {this.state.isLoading === false ? <ShowVariants id={this.state.currentProduct.id} /> : ""}
+                    <h1 className="Hello">{this.state.isLoading === false ? this.state.currentProduct.title : ""}</h1>
+                    {this.state.isLoading === false ? <ShowVariants id={this.state.currentProduct.id} storage={this.myStorage} action={this.sethandlerColor} /> : ""}
                     <p className="text">{this.state.isLoading === false ? this.state.currentProduct.description : ""}</p>
 
                     <div className="zone-button">
@@ -129,8 +181,8 @@ export default class ShowCurrentClass extends React.Component {
                     <ul>
                         {this.state.recommended.map((pro) => {
                             return (
-                                <li onClick={() => this.SelectProduct(pro.id - 1)} key={"recommendeds" + String(pro.title)} >
-                                    <img className="img_smaller" src={"http://localhost:8001/uploads/" +  pro.image} alt={"image" + pro.title} />
+                                <li onClick={() => this.SelectProduct(pro.id, pro.index_of_image)} key={"recommendeds" + String(pro.title)} >
+                                    <img className="img_smaller" src={"http://localhost:8001/uploads/" + pro.image} alt={"image" + pro.title} />
                                     <p>{pro.title} ${pro.price}</p>
                                 </li>
                             )

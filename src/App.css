@@ -92,6 +92,13 @@ html{
     padding: 9px;
     margin: 8px;
 }
+.variant_button:focus{
+    background-color: white;
+    color : black;
+
+
+}
+
 
 
 /*  Here we begin with recommended section */
