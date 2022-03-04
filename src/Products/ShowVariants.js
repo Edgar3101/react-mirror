@@ -23,7 +23,7 @@ export default class ShowVariants extends React.Component{
         this.setState({ colors: list_of_colors})
 
         const new_map= Object.entries(list_of_colors).map(([k, v]) => {
-            for(let i=0; i<data.sizes.length; i++){
+            for(const i in data.sizes){
               if(data.sizes[i].variant_color_id === v.id){
                 return data.sizes[i]
               }

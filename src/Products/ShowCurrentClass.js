@@ -17,8 +17,8 @@ export default class ShowCurrentClass extends React.Component {
             index_of_colors: 0
         }
         this.myStorage = window.localStorage;
-        
-        
+
+
 
     }
     fetch_product(b = null) {
@@ -30,15 +30,19 @@ export default class ShowCurrentClass extends React.Component {
                 var data_val = {};
                 var products = data.product;
                 var colors = data.color;
-                var sizes = data.variant_Size
+                var sizes = data.variant_Size;
+                var productCategories = data.productCategorie;
+                //var category = data.categories;
                 var counter = 0;
                 products.map(function (obj) {
                     data_val[counter] = {
                         "id": obj.id, "title": obj.title, "description": obj.description, "price": obj.price,
-                        "colors": colors.filter(color => color.productId === obj.id), 'sizes': null
+                        "colors": colors.filter(color => color.productId === obj.id), 'sizes': null,
+                        "categorie_id": productCategories.find(element => element.productId === obj.id).categoryId
                     }
                     var list_of_id = data_val[counter]['colors'].map(function (el) { return el.id });
                     data_val[counter]['sizes'] = sizes.filter(size => list_of_id.includes(size.variant_color_id))
+
                     counter = counter + 1;
                 })
                 //Vamos a tener todos los productos Guardados en un estado
@@ -50,6 +54,7 @@ export default class ShowCurrentClass extends React.Component {
 
                 //Ahora una vez tengamos esto tenemos que tener en cuenta que ahora podemos obtener las variantes
             })
+        return true
     }
 
     diferenceTime(arr) {
@@ -65,44 +70,51 @@ export default class ShowCurrentClass extends React.Component {
         }
         return value;
     }
-    componentDidMount() {
-        this.fetch_product();
-        //Hay que modificar esta parte con la data que disponemos
-        fetch('http://localhost:8001/api/random/').then((res) => res.json().then((data) => {
-            const new_map = Object.entries(data.query).map(([k, v]) => {
-                for (let i = 0; i < data.colors.length; i++) {
-                    if (v.id === data.colors[i].productId) {
-                        data.query[k].image = data.colors[i].image;
-                        data.query[k].index_of_image = data.colors[i].id;
-                        //Tenemos un problema y es que debemos hacer un map para conseguir el index en allproducts
-                        return data.query[k];
+    componentDidUpdate(prevProps, prevState){
+        if (this.state.currentProduct !== null && this.state.currentProduct !== prevState.currentProduct) {
+            fetch('http://localhost:8001/api/random/' + this.state.currentProduct.categorie_id).then((res) => res.json().then((data) => {
+                const new_map = Object.entries(data.query).map(([k, v]) => {
+                    for (let i = 0; i < data.colors.length; i++) {
+                        if (v.id === data.colors[i].productId) {
+                            data.query[k].image = data.colors[i].image;
+                            data.query[k].index_of_image = data.colors[i].id;
+                            //Tenemos un problema y es que debemos hacer un map para conseguir el index en allproducts
+                            return data.query[k];
+                        }
                     }
-                }
-            })
-            this.setState({ recommended: new_map });   
-        }));
+                })
+                this.setState({ recommended: new_map });
+            }));
+        }
+
+    }
+    componentDidMount() {
+        this.fetch_product()
+        
+
+        //Hay que modificar esta parte con la data que disponemos
+
         var code = [];
         var times = [];
         var self = this;
         window.addEventListener("keypress", function (e) {
             var enter;
             if (e.key !== "Shift") {
-                if(e.key !== "Enter"){
+                if (e.key !== "Enter") {
                     code.push(e.key)
                 }
                 times.push(new Date().getTime())
             }
-            if(e.key === "Enter"){
-                enter=true
+            if (e.key === "Enter") {
+                enter = true
             }
             //La idea es que con esto capturemos el codigo de barras y haggamos fetch a una base de datos por ejemplo con firebase
-            if (code.length > 6 && self.diferenceTime(times) === true && enter===true) {
+            if (code.length > 6 && self.diferenceTime(times) === true && enter === true) {
                 fetch("http://localhost:8001/api/code/" + code.join('') + "/")
                     .then(res => res.json())
                     .then(data => {
                         if (data.error === undefined) {
                             self.SelectProduct(data.product.id, data.color.id)
-                            //self.setState({ index: data.product.id - 1 }); self.fetch_product();
                             self.myStorage.clear()
 
                         }
@@ -179,7 +191,7 @@ export default class ShowCurrentClass extends React.Component {
                         })}
                     </ul>
                 </div>
-         
+
             </div>
 
         )
