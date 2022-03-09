@@ -172,7 +172,7 @@ export default class ShowCurrentClass extends React.Component {
                 </div>
                 <div className="right_side">
                     <h1 className="Hello">{this.state.isLoading === false ? this.state.currentProduct.title : ""}</h1>
-                    <p className="text">{this.state.isLoading === false ? this.state.currentProduct.description : ""}</p>
+                    <p className="text">{this.state.isLoading === false ? this.state.currentProduct.description.substring(0, 240) : ""}</p>
                     {this.state.isLoading === false ? <ShowVariants id={this.state.currentProduct.id} storage={this.myStorage} action={this.sethandlerColor} /> : ""}
                    
 
