@@ -17,9 +17,6 @@ export default class ShowCurrentClass extends React.Component {
             index_of_colors: 0
         }
         this.myStorage = window.localStorage;
-
-
-
     }
     fetch_product(b = null) {
         this.myStorage.clear()
@@ -48,7 +45,7 @@ export default class ShowCurrentClass extends React.Component {
                 //Vamos a tener todos los productos Guardados en un estado
                 this.setState({ all_products: data_val })
                 console.log(data_val)
-                this.setState({ currentProduct: data_val[this.state.index] });
+                this.setState({ currentProduct: data_val[this.state.index]});
                 b === null ? this.setState({ index_of_colors: Math.floor(Math.random() * this.state.currentProduct.colors.length) }) : this.setState({ index_of_colors: b });
                 this.setState({ isLoading: false });
 
@@ -89,11 +86,8 @@ export default class ShowCurrentClass extends React.Component {
 
     }
     componentDidMount() {
-        this.fetch_product()
-        
-
+        this.fetch_product();
         //Hay que modificar esta parte con la data que disponemos
-
         var code = [];
         var times = [];
         var self = this;
@@ -127,21 +121,23 @@ export default class ShowCurrentClass extends React.Component {
         })
     }
     promiseLoop = async (id, id_of_color) => new Promise((resolve) => {
-        this.setState({ isLoading: true });
-        for (const i in this.state.all_products) {
-            if (this.state.all_products[i].id === id) {
-                this.setState({ index: i })
+        var self= this;
+        self.setState({ isLoading: true });
+        for (const i in self.state.all_products) {
+            if (self.state.all_products[i].id === id) {
+                self.setState({ index: i })
+                break
             }
         }
-        for (const k in this.state.all_products) {
-            for (const j in this.state.all_products[k].colors) {
-                if (this.state.all_products[k].colors[j].id === id_of_color) {
-                    this.fetch_product(j)
+        for (const k in self.state.all_products) {
+            for (const j in self.state.all_products[k].colors) {
+                if (self.state.all_products[k].colors[j].id === id_of_color) {
+                    self.fetch_product(j)
                     break;
                 }
             }
         }
-        this.myStorage.clear();
+        self.myStorage.clear();
         resolve("Works");
     })
 

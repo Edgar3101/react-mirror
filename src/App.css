@@ -1,7 +1,8 @@
 /* Here we start with generals */
+@import url(//db.onlinewebfonts.com/c/83705d73cd2c7aa636402d5f7e20f255?family=KundaBookPremium-Regular);
 html{
     overflow: hidden;
-    font-family: 'Roboto', sans-serif;    
+    font-family: 'KundaBookPremium-Regular', sans-serif;    
     cursor: none !important;
 }
 
@@ -119,7 +120,7 @@ html{
 /*  Here we begin with recommended section */
 .recommended{
     height: 60vh;
-    padding-top: 20%;
+    padding-top: 16%;
 }
 .recommended ul{
     margin-top: 30px;
