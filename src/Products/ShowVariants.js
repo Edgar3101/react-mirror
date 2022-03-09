@@ -49,14 +49,16 @@ export default class ShowVariants extends React.Component{
       
       return(
         <>
+        <h3 className="variant_color_title">Color: </h3>
         <ul>
           {this.state.colors.map((data) => (
-            <li key={data.id} className="list"> <button className="variant_button" onClick={() => this.Save_Option(data.id, "color")}> Color: <div className="circle" style={{ backgroundColor: data.color }}></div> </button></li>
+            <li key={data.id} className="list"> <button style={{ backgroundColor: data.color }} className="circle" onClick={() => this.Save_Option(data.id, "color")}></button></li>
           ))} 
         </ul>
+        <h3 className="variant_size_title">Tallas: </h3>
           <ul>
           {this.state.sizes.map((dato) => {
-            return <li key={dato.id} className="list">  <button className="variant_button"  onClick={() => this.getSize(dato.id, dato.size)}>Talla: {dato.size}</button></li>
+            return <li key={dato.id} className="list">  <button className="variant_button_size"  onClick={() => this.getSize(dato.id, dato.size)}>{dato.size}</button></li>
           })}
         </ul>
         

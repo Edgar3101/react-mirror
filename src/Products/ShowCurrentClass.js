@@ -1,7 +1,7 @@
 import React from "react";
 import ShowVariants from "./ShowVariants";
 import FetchBuy from "./Fetch_Product";
-
+import MainLogo from "../logo.png"
 export default class ShowCurrentClass extends React.Component {
     constructor(props) {
         super(props);
@@ -162,24 +162,29 @@ export default class ShowCurrentClass extends React.Component {
     render() {
 
         return (
+            <>
             <div className="container">
                 <input type="text" hidden id="code-bar" />
+                <img src={MainLogo} alt="logo" className="img_logo"/>
                 <div className="left_side">
                     <img className="default_image" src={this.state.isLoading === false ? "http://localhost:8001/uploads/" + this.state.currentProduct.colors[this.state.index_of_colors].image : ""}
                         alt={"Producto" + this.state.index} />
                 </div>
                 <div className="right_side">
                     <h1 className="Hello">{this.state.isLoading === false ? this.state.currentProduct.title : ""}</h1>
-                    {this.state.isLoading === false ? <ShowVariants id={this.state.currentProduct.id} storage={this.myStorage} action={this.sethandlerColor} /> : ""}
                     <p className="text">{this.state.isLoading === false ? this.state.currentProduct.description : ""}</p>
+                    {this.state.isLoading === false ? <ShowVariants id={this.state.currentProduct.id} storage={this.myStorage} action={this.sethandlerColor} /> : ""}
+                   
 
                     <div className="zone-button">
-                        <button className="direction-buttons" onClick={() => FetchBuy(this.state.currentProduct, this.myStorage)}><strong>Solicitar</strong></button>
+                        <button className="direction-buttons" onClick={() => FetchBuy(this.state.currentProduct, this.myStorage)}>Solicitar</button>
                     </div>
 
                 </div>
-                <div className="recommended">
-                    <h3 className="text">Recomendaciones</h3>
+               
+            </div>
+            <div className="recommended">
+                    <h3 className="text">Rroductos Relacionados</h3>
                     <ul>
                         {this.state.recommended.map((pro) => {
                             return (
@@ -192,8 +197,7 @@ export default class ShowCurrentClass extends React.Component {
                     </ul>
                 </div>
 
-            </div>
-
+            </>
         )
     }
 }

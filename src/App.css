@@ -22,32 +22,36 @@ html{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
     width: 100%;
-
+}
+.img_logo{
+    align-self: center;
+    width: auto;
+    height: 150px;
 }
 /*  Here we begin with left-side section */
 .default_image{
     margin-top: 30px;
+    margin-right: 30px;
     width: auto;
-    height: 46vh;
+    height: 30vh;
 }
 /*  Here we begin with right-side section */
 .right_side{
-    /*
-    grid-column: 1;
-    grid-row:2;
-   margin-left: 10%; */
+ 
    display: flex;
-    flex-direction: column;
-    justify-content: center;
-   align-items: center;
+   flex-direction: column;
+   align-items: flex-end;
    justify-content: center;
+   margin-right: 3%;
+   
 }
 .right_side ul{
     display: flex;
     align-items: stretch; /* Default */
     justify-content: space-between;
+    margin-right: 5px;
 
 }
 .right_side li{
@@ -59,56 +63,69 @@ html{
 
 .right_side h1{
     color: white;
-    text-align: center;
+    padding-right: 9%;
+    font-size: 50px;
+
 }
 .right_side p{
     color: white;
-    width: 70%;
-    font-size: 25px;
-    text-align: center;
+    width: 50%;
+    font-size: 21px;
+    margin-right: 18px;
+    text-align: right;
 }
 .direction-buttons{
     margin: 20px;
-    background-color: #007bff;
-    color: white;
-    padding: 13px;
-
+    background-color: #ffffff;
+    color: #000000;
+    padding: 8px 25px;
+    font-size: 30px;
+    border-radius: 30px;
 }
 .direction-buttons > i{
     color: white;
 }
+.variant_size_title, .variant_color_title{
+    font-size: 30px;
+    margin: 0px;
+    margin-right: 3%;
+}
 .circle{
-    -webkit-border-radius:8px;
-    -moz-border-radius:8px;
-    border-radius:8px;
+   
+    border-radius:25%;
     border:1px solid #ccc;
-    width:14px;
-    height:14px;
+    width:40px;
+    height:40px;
     display: inline-block;
 }
-.variant_button{
+
+.variant_button_size{
     background-color: transparent;
     color: white;
     padding: 9px;
-    margin: 8px;
+    margin: 8px; 
+    border-radius:15%;
+    font-size: 20px;  
+    border: 1px solid white;
 }
-.variant_button:focus{
+.circle:focus{
+    border: 3px solid white;
+}
+.variant_button_size:focus{
     background-color: white;
     color : black;
-
-
 }
-
-
 
 /*  Here we begin with recommended section */
 .recommended{
-    margin-top: 10px;
+    height: 60vh;
+    padding-top: 20%;
 }
 .recommended ul{
+    margin-top: 30px;
     display: flex;
     align-items: stretch; /* Default */
-    justify-content: space-between;
+    justify-content: center;
    
 }
 .recommended li{
