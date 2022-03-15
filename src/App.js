@@ -1,7 +1,7 @@
 import "./App.css"
 import React from "react";
-//import ShowCurrent from "./Products/ShowCurrent";
-import ShowCurrentClass from "./Products/ShowCurrentClass";
+//import ShowCurrentClass from "./Products/ShowCurrentClass";
+import Main from "./Refactor/Main";
 
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
   //Es imporante tener en cuenta que en este casi siempre renderizaremos el primero 
   return (
     <div className="App">
-      <ShowCurrentClass/>
+      <Main/>
     </div>
   );
 }

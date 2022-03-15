@@ -2,6 +2,8 @@ import React from "react";
 import ShowVariants from "./ShowVariants";
 import FetchBuy from "./Fetch_Product";
 import MainLogo from "../logo.png"
+
+
 export default class ShowCurrentClass extends React.Component {
     constructor(props) {
         super(props);
@@ -180,7 +182,7 @@ export default class ShowCurrentClass extends React.Component {
                
             </div>
             <div className="recommended">
-                    <h3 className="text">Rroductos Relacionados</h3>
+                    <h3 className="text">Productos Relacionados</h3>
                     <ul>
                         {this.state.recommended.map((pro) => {
                             return (
