@@ -27,6 +27,11 @@ export default class Main extends React.Component {
     resetTimer(){
         this.setState({ time: 0 })
     }
+
+    getListOFiD(OBJ){
+        var list= OBJ.map(function(id){ return id.id})
+        return list.sort(function(a,b) { return a-b})
+    }
     componentDidMount() {
         this.startTimer()
         var self = this;
@@ -48,7 +53,7 @@ export default class Main extends React.Component {
                             //Arreglar esta logica despues
                             do {
                                 var quickrandom= Math.floor(Math.random() * data.related[i].colors.length)
-                            } while(data.related[i].colors[quickrandom] === data.product.colors[random])
+                            } while(data.related[i].colors[quickrandom].id === data.product.colors[random].id)
                             
                             data.related[i].currentColor= data.related[i].colors[quickrandom]
                             data.related[i].currentSizes= data.related[i].sizes.filter(obj => obj.variant_color_id === data.related[i].currentColor.id)
