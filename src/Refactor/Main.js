@@ -24,11 +24,9 @@ export default class Main extends React.Component {
            this.setState({ time : this.state.time + 1})
        }, 180000)
     }
-    
     resetTimer(){
         this.setState({ time: 0 })
     }
-
     componentDidMount() {
         this.startTimer()
         var self = this;
@@ -59,13 +57,11 @@ export default class Main extends React.Component {
                         const final_data= Object.keys(data.related).map(key => data.related[key])
                         self.setState({ all_products: final_data })
                         self.resetTimer()
-                        self.setState({ currentProduct: data.product })  
-                        
+                        self.setState({ currentProduct: data.product });
                     })
                     while (code.length > 0)
                     code.pop();
             }
-
         })
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -86,10 +82,7 @@ export default class Main extends React.Component {
                 this.setState({ currentProduct: this.state.all_products[i]})
             }
         }
-
     }
-
-
     render() {
         const show = this.state.show;
         if (show) {
