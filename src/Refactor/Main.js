@@ -45,6 +45,8 @@ export default class Main extends React.Component {
                         data.product.currentColor = data.product.colors[random]
                         //Antes de hacer cualquier cambio es importante seleccionar los productos que se van a renderizar y con que imagenes 
                         for(const i in data.related){
+                            //La idea es que en productos relacionados seleccionemos un producto distinto
+                            //Arreglar esta logica despues
                             var quickrandom= Math.floor(Math.random() * data.related[i].colors.length)
                             data.related[i].currentColor= data.related[i].colors[quickrandom]
                         }
