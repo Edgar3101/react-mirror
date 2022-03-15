@@ -43,12 +43,17 @@ export default class Main extends React.Component {
                         //Primero que todo debemos seleccionar una imagen que querramos renderizar
                         var random= Math.floor(Math.random() * data.product.colors.length)
                         data.product.currentColor = data.product.colors[random]
-                        //Antes de hacer cualquier cambio es importante seleccionar los productos que se van a renderizar y con que imagenes 
+                        //Antes de hacer cualquier cambio es importante seleccionar los productos que se van a renderizar y con que imagenes
+                        data.product.currentSizes= data.product.sizes.filter(obj => obj.variant_color_id === data.product.currentColor.id);
                         for(const i in data.related){
                             //La idea es que en productos relacionados seleccionemos un producto distinto
                             //Arreglar esta logica despues
-                            var quickrandom= Math.floor(Math.random() * data.related[i].colors.length)
+                            do {
+                                var quickrandom= Math.floor(Math.random() * data.related[i].colors.length)
+                            } while(data.related[i].colors[quickrandom] === data.product.colors[random])
+                            
                             data.related[i].currentColor= data.related[i].colors[quickrandom]
+                            data.related[i].currentSizes= data.related[i].sizes.filter(obj => obj.variant_color_id === data.related[i].currentColor.id)
                         }
                         //Aqui convertimos el objeto a un array
                         const final_data= Object.keys(data.related).map(key => data.related[key])

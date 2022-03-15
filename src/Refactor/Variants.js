@@ -22,6 +22,7 @@ export default class Variants extends React.Component{
 
     changeColors(data){
      this.currentProduct.currentColor= data;
+     this.currentProduct.currentSizes= this.currentProduct.sizes.filter(obj => obj.variant_color_id === this.currentProduct.currentColor.id)
      this.props.action(this.currentProduct) 
    }
     render() {
@@ -35,7 +36,7 @@ export default class Variants extends React.Component{
                 </ul>
                 <h3 className="variant_size_title">Tallas: </h3>
                   <ul>
-                  {this.currentProduct.sizes.map((dato) => {
+                  {this.currentProduct.currentSizes.map((dato) => {
                     return <li key={dato.id} className="list">  <button className="variant_button_size" >{dato.size}</button></li>
                   })}
                 </ul>
