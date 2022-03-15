@@ -64,7 +64,7 @@ html{
 
 .right_side h1{
     color: white;
-    padding-right: 9%;
+    padding-right: 2%;
     font-size: 50px;
 
 }
@@ -120,7 +120,7 @@ html{
 /*  Here we begin with recommended section */
 .recommended{
     height: 60vh;
-    padding-top: 16%;
+    padding-top: 12%;
 }
 .recommended ul{
     margin-top: 30px;

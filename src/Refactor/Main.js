@@ -123,7 +123,8 @@ export default class Main extends React.Component {
                                     <li key={"recommendeds" + String(pro.title)} onClick={() => this.changeProduct(pro.id)}>
                                         <img className="img_smaller" src={"http://localhost:8001/uploads/" + pro.currentColor.image} 
                                         alt={"image" + pro.title} />
-                                        <p>{pro.title} ${pro.price}</p>
+                                        <p>{pro.title}</p>
+                                        <p>$ {pro.price}</p>
                                     </li>
                                 )
                             })}
