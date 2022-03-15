@@ -51,9 +51,11 @@ export default class Main extends React.Component {
                         for(const i in data.related){
                             //La idea es que en productos relacionados seleccionemos un producto distinto
                             //Arreglar esta logica despues
+                            var counter=0;
                             do {
                                 var quickrandom= Math.floor(Math.random() * data.related[i].colors.length)
-                            } while(data.related[i].colors[quickrandom].id === data.product.colors[random].id)
+                                counter = counter + 1;
+                            } while(data.related[i].colors[quickrandom].id === data.product.colors[random].id || counter > 8)
                             
                             data.related[i].currentColor= data.related[i].colors[quickrandom]
                             data.related[i].currentSizes= data.related[i].sizes.filter(obj => obj.variant_color_id === data.related[i].currentColor.id)
@@ -65,7 +67,7 @@ export default class Main extends React.Component {
                         self.setState({ currentProduct: data.product });
                     })
                     while (code.length > 0)
-                    code.pop();
+                        code.pop();
             }
         })
     }
