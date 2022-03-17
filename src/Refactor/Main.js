@@ -21,8 +21,8 @@ export default class Main extends React.Component {
     }
     startTimer(){
        this.timer = setInterval(() => {
-           this.setState({ time : this.state.time + 1})
-       }, 180000)
+           this.state.time < 1000 ? this.setState({ time : this.state.time + 1}) : this.setState({ time : 0})
+       }, 1000)
     }
     resetTimer(){
         this.setState({ time: 0 })
@@ -75,7 +75,7 @@ export default class Main extends React.Component {
         if (prevState.currentProduct !== this.state.currentProduct) {           
             this.setState({ show: true });
         }
-        if(this.state.time > 5 && this.state.show === true ){
+        if(this.state.time > 120 && this.state.show === true ){
             this.setState({ show: false})
         }
     }
