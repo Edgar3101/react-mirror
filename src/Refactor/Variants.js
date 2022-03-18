@@ -10,7 +10,8 @@ export default class Variants extends React.Component{
       this.state = {
           show: false,
       }
-      this.currentProduct= this.props.currentProduct;      
+      this.currentProduct= this.props.currentProduct;   
+      this.mystorage= this.props.storage;   
     }
    
     componentDidUpdate(prevProps, prevState){
@@ -25,6 +26,12 @@ export default class Variants extends React.Component{
      this.currentProduct.currentSizes= this.currentProduct.sizes.filter(obj => obj.variant_color_id === this.currentProduct.currentColor.id)
      this.props.action(this.currentProduct) 
    }
+   getSize(size, sizeId){
+    this.mystorage.clear();
+    this.mystorage.setItem("size", size)
+    this.mystorage.setItem("id", sizeId)
+
+  }
     render() {
             return(
                 <>
@@ -37,7 +44,7 @@ export default class Variants extends React.Component{
                 <h3 className="variant_size_title">Tallas: </h3>
                   <ul>
                   {this.currentProduct.currentSizes.map((dato) => {
-                    return <li key={dato.id} className="list">  <button className="variant_button_size" >{dato.size}</button></li>
+                    return <li key={dato.id} className="list">  <button className="variant_button_size" onClick={() => this.getSize(dato.size, dato.id)}>{dato.size}</button></li>
                   })}
                 </ul>
                 </>

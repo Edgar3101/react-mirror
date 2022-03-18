@@ -1,7 +1,7 @@
 import React from "react";
 import Variants from "./Variants";
 import MainLogo from "../logo.png"
-
+import FetchBuy from "../Products/Fetch_Product";
 
 
 export default class Main extends React.Component {
@@ -105,11 +105,11 @@ export default class Main extends React.Component {
                             <h1 className="Hello">{this.state.currentProduct.title}</h1>
                             <p className="text">{this.state.currentProduct.description.substring(0, 240)}</p>
                             
-                            <Variants currentProduct={this.state.currentProduct} action={this.sethandlerProduct} />
+                            <Variants storage={this.myStorage} currentProduct={this.state.currentProduct} action={this.sethandlerProduct} />
 
 
                             <div className="zone-button">
-                                <button className="direction-buttons" >Solicitar</button>
+                                <button className="direction-buttons" onClick={() => FetchBuy(this.currentProduct, this.myStorage)}>Solicitar</button>
                             </div>
 
                         </div>
