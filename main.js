@@ -7,6 +7,7 @@ function createWindow () {
   const mainWindow = new BrowserWindow({
     fullscreen: true,
     autoHideMenuBar: true,
+    focusable: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }
