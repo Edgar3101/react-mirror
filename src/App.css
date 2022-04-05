@@ -13,13 +13,7 @@ html{
 }
 
 .container{
-    /*
-    display: grid;
-    grid-template-columns: repeat(12, 2fr);
-    grid-gap: 1px;
-    grid-auto-rows: minmax(100px, auto);
-    width: 100%;
-    */
+   
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -64,7 +58,8 @@ html{
 
 .right_side h1{
     color: white;
-    padding-right: 2%;
+    padding-right: 1%;
+    text-align: end;
     font-size: 50px;
 
 }
