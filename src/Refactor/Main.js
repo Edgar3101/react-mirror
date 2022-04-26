@@ -65,7 +65,7 @@ export default class Main extends React.Component {
                         self.setState({ all_products: final_data })
                         self.resetTimer()
                         self.setState({ currentProduct: data.product });
-                    }).catch(err => {console.log("Lo siento el producto no existe" + err)})
+                    }).catch(err => {console.log("Lo siento el producto no existe " + err)})
                     while (code.length > 0)
                         code.pop();
             }
