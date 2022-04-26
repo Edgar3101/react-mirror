@@ -58,10 +58,11 @@ html{
 
 .right_side h1{
     color: white;
-    padding-right: 1%;
-    text-align: end;
-    font-size: 50px;
-
+    padding-right: 0%;
+    text-align: center;
+    font-size: 45px;
+    overflow-wrap: normal;
+    margin-left: 40%;
 }
 .right_side p{
     color: white;
