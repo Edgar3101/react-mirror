@@ -33,7 +33,7 @@ export default class Main extends React.Component {
         return list.sort(function(a,b) { return a-b})
     }
     componentDidMount() {
-        this.startTimer()
+        //this.startTimer()
         var self = this;
         var code = [];
         window.addEventListener("keypress", function (e) {
@@ -43,31 +43,45 @@ export default class Main extends React.Component {
                 fetch("http://localhost:8001/api/" + code.join("") + "/")
                     .then(res => res.json())
                     .then(data => {
+                        if (data.error !== undefined){
+                            console.log("Lo siento el producto no existe " + data.error)
+                        }else{
+                      
                         //Primero que todo debemos seleccionar una imagen que querramos renderizar
                         var random= Math.floor(Math.random() * data.product.colors.length)
+ 
                         data.product.currentColor = data.product.colors[random]
+
                         //Antes de hacer cualquier cambio es importante seleccionar los productos que se van a renderizar y con que imagenes
                         data.product.currentSizes= data.product.sizes.filter(obj => obj.variant_color_id === data.product.currentColor.id);
                         for(const i in data.related){
                             //La idea es que en productos relacionados seleccionemos un producto distinto
-                            //Arreglar esta logica despues
                             var counter=0;
                             do {
+
                                 var quickrandom= Math.floor(Math.random() * data.related[i].colors.length)
                                 counter = counter + 1;
-                            } while(data.related[i].colors[quickrandom].id === data.product.colors[random].id || counter > 8)
+                            } while((data.related[i].colors[quickrandom].id === data.product.colors[random].id) && counter < 8)
                             
                             data.related[i].currentColor= data.related[i].colors[quickrandom]
                             data.related[i].currentSizes= data.related[i].sizes.filter(obj => obj.variant_color_id === data.related[i].currentColor.id)
                         }
+                             
                         //Aqui convertimos el objeto a un array
                         const final_data= Object.keys(data.related).map(key => data.related[key])
+                             
                         self.setState({ all_products: final_data })
+                             
                         self.resetTimer()
-                        self.setState({ currentProduct: data.product });
+                             
+                        self.setState({ currentProduct: data.product });}
+                             
                     }).catch(err => {console.log("Lo siento el producto no existe " + err)})
-                    while (code.length > 0)
+                         
+                    while (code.length > 0){
                         code.pop();
+                    }
+                       
             }
         })
     }
